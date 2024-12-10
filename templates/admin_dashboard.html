@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Statistics Section -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card bg-primary text-white text-center shadow-lg border-0 p-3">
+                <h4 class="fw-bold">Total Orders</h4>
+                <h2>{{ total_orders }}</h2>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card bg-success text-white text-center shadow-lg border-0 p-3">
+                <h4 class="fw-bold">Total Revenue</h4>
+                <h2>${{ "%.2f"|format(total_revenue) }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orders Table -->
+    <h3 class="text-center text-secondary fw-bold mb-4">Orders Management</h3>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Order ID</th>
+                    <th>User</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order._id }}</td>
+                    <td>{{ order.name }}</td>
+                    <td class="text-success fw-bold">${{ "%.2f"|format(order.total_price) }}</td>
+                    <td>
+                        <span class="badge bg-{% if order.status == 'Delivered' %}success{% elif order.status == 'Shipped' %}info{% else %}warning{% endif %}">
+                            {{ order.status if order.status else "Pending" }}
+                        </span>
+                    </td>
+                    <td>
+                        <form action="{{ url_for('update_order', order_id=order._id) }}" method="POST" class="d-inline">
+                            <select name="status" class="form-select form-select-sm d-inline w-50">
+                                <option value="Pending" {% if order.status == "Pending" %}selected{% endif %}>Pending</option>
+                                <option value="Shipped" {% if order.status == "Shipped" %}selected{% endif %}>Shipped</option>
+                                <option value="Delivered" {% if order.status == "Delivered" %}selected{% endif %}>Delivered</option>
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-primary mt-1">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted py-3">No orders found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Order pagination" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('admin_dashboard', page=page-1) }}">Previous</a>
+            </li>
+            {% endif %}
+            <li class="page-item disabled">
+                <span class="page-link">Page {{ page }}</span>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('admin_dashboard', page=page+1) }}">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Custom Styles -->
+<style>
+    .card {
+        border-radius: 15px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .btn-primary {
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .pagination .page-link {
+        border-radius: 8px;
+    }
+</style>
+{% endblock %}

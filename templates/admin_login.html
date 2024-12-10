@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="card p-4 shadow-lg border-0" style="width: 400px;">
+        <div class="text-center mb-4">
+            <h3 class="fw-bold text-primary">Admin Login</h3>
+            <p class="text-muted">Access the admin dashboard</p>
+        </div>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="username" class="form-label fw-semibold">Username</label>
+                <input type="text" name="username" id="username" class="form-control" placeholder="Enter Username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label fw-semibold">Password</label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100 py-2 shadow-sm">Login</button>
+        </form>
+    </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .form-control:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+    }
+
+    .btn-success {
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+</style>
+{% endblock %}

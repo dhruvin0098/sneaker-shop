@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Product Image Gallery -->
+        <div class="col-lg-6 mb-4">
+            <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner rounded shadow-lg">
+                    {% for image in product.images %}
+                    <div class="carousel-item {% if loop.first %}active{% endif %}">
+                        <img src="{{ image }}" class="d-block w-100" alt="{{ product.name }}" style="height: 500px; object-fit: cover;">
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- Carousel Controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-lg-6">
+            <h1 class="display-5 fw-bold">{{ product.name }}</h1>
+            <h3 class="text-success my-3 fw-bold">${{ product.price }}</h3>
+            <p class="text-muted">{{ product.description }}</p>
+
+            <!-- Action Buttons -->
+            <div class="d-flex flex-column gap-3 mt-4">
+                <a href="{{ url_for('add_to_cart', product_id=product._id) }}" class="btn btn-lg btn-success shadow-sm animate-hover">Add to Cart</a>
+                <a href="{{ url_for('checkout', product_id=product._id) }}" class="btn btn-lg btn-primary shadow-sm animate-hover">
+                    Order Now
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CSS Styling for Modern UI -->
+<style>
+    /* General Styles */
+    h1, h3 {
+        font-family: 'Roboto', sans-serif;
+        letter-spacing: 1px;
+    }
+    p {
+        font-size: 1.1rem;
+        line-height: 1.7;
+    }
+    .btn {
+        border-radius: 12px;
+        font-weight: 500;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn.animate-hover:hover {
+        transform: translateY(-3px);
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.15);
+    }
+    .carousel-item img {
+        border-radius: 15px;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .carousel-item img {
+            height: 350px;
+        }
+    }
+</style>
+{% endblock %}

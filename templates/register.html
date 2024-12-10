@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card p-4 shadow rounded-4" style="max-width: 500px; width: 100%; border: none;">
+        <!-- Logo or Title -->
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-dark">Register</h2>
+            <p class="text-muted small">Create your account and join us today!</p>
+        </div>
+
+        <!-- Registration Form -->
+        <form method="POST" action="{{ url_for('register') }}" onsubmit="return validateMobile();">
+            <div class="form-floating mb-3">
+                <input type="text" id="name" name="name" class="form-control rounded-3" placeholder="Full Name" required>
+                <label for="name">Full Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" id="username" name="username" class="form-control rounded-3" placeholder="Username" required>
+                <label for="username">Username</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" id="email" name="email" class="form-control rounded-3" placeholder="Email Address" required>
+                <label for="email">Email Address</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="tel" id="mobile" name="mobile" class="form-control rounded-3" placeholder="Mobile Number" maxlength="10" required>
+                <label for="mobile">Mobile Number</label>
+                <small id="mobile-error" class="text-danger d-none">Please enter a valid 10-digit mobile number.</small>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" id="password" name="password" class="form-control rounded-3" placeholder="Password" required>
+                <label for="password">Password</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control rounded-3" placeholder="Confirm Password" required>
+                <label for="confirm_password">Confirm Password</label>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 py-2 fw-bold rounded-3">
+                Register
+            </button>
+        </form>
+
+        <!-- Already have an account -->
+        <div class="text-center mt-4 small">
+            <span class="text-muted">Already have an account?
+                <a href="{{ url_for('login') }}" class="text-primary fw-bold text-decoration-none">Login</a>
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .card {
+        background-color: #ffffff;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control {
+        background-color: #f1f3f5;
+        border: none;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border: 1px solid #28a745;
+        box-shadow: 0 0 5px rgba(40, 167, 69, 0.2);
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+        transform: scale(1.02);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    a.text-primary:hover {
+        text-decoration: underline;
+    }
+
+    small.text-danger {
+        font-size: 0.85rem;
+    }
+</style>
+
+<!-- JavaScript for Mobile Validation -->
+<script>
+    function validateMobile() {
+        const mobileInput = document.getElementById('mobile');
+        const mobileError = document.getElementById('mobile-error');
+        const mobilePattern = /^[0-9]{10}$/;
+
+        if (!mobilePattern.test(mobileInput.value)) {
+            mobileError.classList.remove('d-none');
+            mobileInput.focus();
+            return false;
+        }
+
+        mobileError.classList.add('d-none');
+        return true;
+    }
+</script>
+{% endblock %}

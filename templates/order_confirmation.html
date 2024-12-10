@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center p-5 bg-white rounded shadow-lg">
+        <!-- Success Icon -->
+        <i class="fas fa-check-circle text-success mb-4" style="font-size: 4rem;"></i>
+        <h2 class="fw-bold text-success">Order Confirmed!</h2>
+        <p class="fs-5 text-muted">Thank you, <strong>{{ name }}</strong>, for your purchase.</p>
+
+        <!-- Order Summary -->
+        <h4 class="fw-bold mt-4">Order Summary</h4>
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Product</th>
+                        <th>Image</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order_items %}
+                    <tr>
+                        <td>{{ item.product_name }}</td>
+                        <td>
+                            <img src="{{ item.image_path }}" alt="{{ item.product_name }}"
+                                 class="img-thumbnail" style="width: 80px; height: 80px; object-fit: cover;">
+                        </td>
+                        <td class="text-success fw-bold">${{ item.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Total Price -->
+        <h4 class="text-end mt-3 fw-bold">Total Amount: <span class="text-primary">${{ total_price }}</span></h4>
+
+        <!-- Shipping Details -->
+        <div class="mt-4 text-start">
+            <h5 class="fw-bold">Shipping Details</h5>
+            <p><strong>Name:</strong> {{ name }}</p>
+            <p><strong>Address:</strong> {{ address }}</p>
+            <p><strong>Phone:</strong> {{ phone }}</p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="mt-4">
+            <a href="/products" class="btn btn-outline-secondary me-2">
+                <i class="fas fa-shopping-bag me-2"></i> Continue Shopping
+            </a>
+            <a href="/" class="btn btn-success">
+                <i class="fas fa-home me-2"></i> Back to Home
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+    .btn {
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    img {
+        border-radius: 8px;
+    }
+
+    table thead th {
+        background-color: #343a40;
+        color: #fff;
+    }
+</style>
+
+<!-- FontAwesome for Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}

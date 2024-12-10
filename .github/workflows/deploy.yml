@@ -1,0 +1,50 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main  # Runs the workflow when changes are pushed to the main branch
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest  # GitHub Actions runner OS
+
+    steps:
+    # Step 1: Checkout the code
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.9
+
+    # Step 3: Install dependencies
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # Step 4: Deploy to EC2
+    - name: Deploy to EC2
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        source: "."
+        target: "/home/ubuntu/app"
+
+    # Step 5: Restart Flask App on EC2
+    - name: SSH into EC2 and restart app
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          cd /home/ubuntu/app
+          sudo pkill -f "python3 app.py" || true
+          nohup python3 app.py > app.log 2>&1 &

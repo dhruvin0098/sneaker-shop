@@ -1,0 +1,12 @@
+# Step 1: Initialize Git
+git init
+
+# Step 2: Stage and commit files
+git add .
+git commit -m "Initial commit: Flask-based sneaker shop project"
+
+# Step 3: Link to GitHub repository
+git remote add origin https://github.com/yourusername/sneaker-shop.git
+
+# Step 4: Push files to GitHub
+git push -u origin master

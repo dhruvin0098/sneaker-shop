@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Profile Header -->
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-primary">Your Profile</h2>
+        <p class="text-muted">Manage your details and orders</p>
+    </div>
+
+    <!-- Profile Details Card -->
+    <div class="card shadow-lg border-0">
+        <div class="card-body p-4">
+            <h4 class="text-secondary fw-bold mb-3">Profile Details</h4>
+
+            <!-- Static Display of Profile Data -->
+            <div id="profile-view">
+                <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item"><strong>Name:</strong> {{ user.name or "N/A" }}</li>
+                    <li class="list-group-item"><strong>Email:</strong> {{ user.email or "N/A" }}</li>
+                    <li class="list-group-item"><strong>Username:</strong> {{ user.username }}</li>
+                    <li class="list-group-item"><strong>Mobile:</strong> {{ user.mobile or "N/A" }}</li>
+                </ul>
+                <div class="text-center">
+                    <button class="btn btn-success px-4 shadow-sm" id="edit-button">
+                        <i class="fas fa-user-edit me-2"></i> Edit Profile
+                    </button>
+                </div>
+            </div>
+
+            <!-- Editable Form for Profile Update -->
+            <form method="POST" id="edit-form" class="row g-3 d-none">
+                <div class="col-md-6">
+                    <label for="name" class="form-label fw-semibold">Name</label>
+                    <input type="text" name="name" class="form-control" id="name" value="{{ user.name or '' }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="email" class="form-label fw-semibold">Email</label>
+                    <input type="email" name="email" class="form-control" id="email" value="{{ user.email or '' }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="username" class="form-label fw-semibold">Username</label>
+                    <input type="text" name="username" class="form-control" id="username" value="{{ user.username }}" readonly>
+                </div>
+                <div class="col-md-6">
+                    <label for="mobile" class="form-label fw-semibold">Mobile</label>
+                    <input type="text" name="mobile" class="form-control" id="mobile" value="{{ user.mobile or '' }}" maxlength="10" required>
+                </div>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success btn-lg shadow-sm px-4">
+                        <i class="fas fa-save me-2"></i> Save Changes
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg shadow-sm px-4" id="cancel-button">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quick Navigation -->
+    <div class="row mt-5">
+        <!-- Orders Card -->
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm h-100 border-0 hover-scale">
+                <div class="card-body text-center">
+                    <h5 class="fw-bold text-primary">Your Orders</h5>
+                    <p class="text-muted">Track and view all your past orders</p>
+                    <h3 class="text-success fw-bold">{{ orders_count }}</h3>
+                    <a href="/order-history" class="btn btn-outline-primary mt-2">
+                        <i class="fas fa-box"></i> View Orders
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .form-control:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+    }
+
+    .btn-success {
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .hover-scale {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-scale:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .list-group-item {
+        border: none;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
+
+<!-- JavaScript for Toggle Edit -->
+<script>
+    document.getElementById("edit-button").addEventListener("click", function () {
+        document.getElementById("profile-view").classList.add("d-none");
+        document.getElementById("edit-form").classList.remove("d-none");
+    });
+
+    document.getElementById("cancel-button").addEventListener("click", function () {
+        document.getElementById("edit-form").classList.add("d-none");
+        document.getElementById("profile-view").classList.remove("d-none");
+    });
+</script>
+{% endblock %}

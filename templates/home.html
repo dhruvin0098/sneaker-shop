@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section (Carousel Banner) -->
+<div id="hero" class="container mt-4">
+    <div id="carouselExample" class="carousel slide shadow-sm" data-bs-ride="carousel">
+        <div class="carousel-inner rounded">
+            <div class="carousel-item active">
+                <a href="/products">
+                    <img src="/static/images/banner01.jpg" class="d-block w-100" alt="Air Jordan Collection" style="height: 400px; object-fit: cover;">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="/products">
+                    <img src="/static/images/banner02.jpg" class="d-block w-100" alt="Nike Air Max" style="height: 400px; object-fit: cover;">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="/products">
+                    <img src="/static/images/banner03.jpg" class="d-block w-100" alt="Adidas Yeezy" style="height: 400px; object-fit: cover;">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="/products">
+                    <img src="/static/images/banner04.jpg" class="d-block w-100" alt="Sneaker Sale" style="height: 400px; object-fit: cover;">
+                </a>
+            </div>
+        </div>
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<!-- Most Selling Products Section -->
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Most Selling Products</h2>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-3 mb-4">
+            <!-- Product Card -->
+            <a href="/product/{{ product._id }}" style="text-decoration: none; color: inherit;">
+                <div class="card h-100 shadow-sm product-card">
+                    <img src="{{ product.images[0] }}" class="card-img-top rounded-top" alt="{{ product.name }}" style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">{{ product.name }}</h5>
+                        <p class="card-text text-muted">${{ product.price }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    /* Hero Section */
+    #carouselExample {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    /* Product Cards */
+    .product-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card img {
+        transition: transform 0.3s ease;
+    }
+
+    .product-card:hover img {
+        transform: scale(1.05);
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #777;
+    }
+</style>
+{% endblock %}

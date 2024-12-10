@@ -1,0 +1,98 @@
+/* General Styles */
+img {
+    max-width: 100%;   /* Ensures image doesn't overflow */
+    height: auto;      /* Maintains aspect ratio */
+}
+
+form {
+    margin-top: 20px;  /* Space above forms */
+}
+
+form .form-control {
+    border-radius: 0; /* Makes form inputs squared */
+}
+
+/* Card Styling */
+.card {
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Hover scaling effect */
+}
+
+/* Card Image Styling */
+.card-img-top {
+    object-fit: cover; /* Ensures images fit within cards neatly */
+    height: 300px;     /* Fixes product image height */
+}
+
+/* Hover Scale Effect */
+.hover-scale {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow */
+}
+
+/* Carousel (Banner) Styling */
+.carousel-item img {
+    height: 400px;      /* Fixed height for carousel images */
+    object-fit: cover;  /* Ensures the image maintains its aspect ratio */
+}
+
+/* Footer Styling */
+footer {
+    background-color: #222; /* Dark footer background */
+    color: #fff;            /* Light text */
+    padding: 15px 0;
+    text-align: center;
+    margin-top: auto;       /* Push footer to the bottom */
+}
+
+footer a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #fff;
+}
+
+/* Buttons Styling */
+.btn {
+    border-radius: 8px; /* Consistent button rounding */
+    transition: all 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* Table Styling */
+.table th, .table td {
+    vertical-align: middle; /* Align table content */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f9f9f9; /* Light hover effect */
+}
+
+/* Utility Classes */
+.text-primary {
+    color: #1199ff !important; /* Custom primary blue */
+}
+
+.text-dark {
+    font-weight: bold;
+}
+
+.img-thumbnail {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px; /* Rounded image corners */
+}

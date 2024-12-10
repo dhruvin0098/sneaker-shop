@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Cart Title -->
+    <h2 class="text-center mb-4 animate__animated animate__fadeInDown">Your Shopping Cart</h2>
+
+    {% if cart_items %}
+    <!-- Cart Items -->
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr class="cart-row animate__animated animate__fadeInUp animate__delay-{{ loop.index }}00ms">
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img src="{{ item.image_path }}" alt="{{ item.product_name }}"
+                                 class="img-thumbnail me-3 hover-scale-img"
+                                 style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;">
+                            <span>{{ item.product_name }}</span>
+                        </div>
+                    </td>
+                    <td class="text-success fw-bold">${{ item.price }}</td>
+                    <td>
+                        <input type="number" class="form-control text-center" value="1" min="1" max="10" style="width: 60px;">
+                    </td>
+                    <td class="text-dark fw-bold">${{ item.price }}</td>
+                    <td>
+                        <a href="/remove-from-cart/{{ item._id }}"
+                           class="btn btn-outline-danger btn-sm px-3 remove-btn animate__animated animate__bounceIn">
+                            <i class="fas fa-trash-alt"></i> Remove
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Checkout Button -->
+    <div class="text-end mt-3 animate__animated animate__fadeInUp">
+        <a href="/checkout" class="btn btn-success btn-lg px-4 shadow-lg animate__animated animate__pulse animate__infinite">Proceed to Checkout</a>
+    </div>
+
+    {% else %}
+    <!-- Empty Cart Message -->
+    <div class="text-center mt-5 animate__animated animate__fadeIn">
+        <h4 class="text-muted">Your cart is empty!</h4>
+        <a href="/products" class="btn btn-outline-primary mt-3">Browse Products</a>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Custom Styles -->
+<style>
+    .table th, .table td {
+        vertical-align: middle;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .cart-row:hover {
+        background-color: #f9f9f9;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .remove-btn:hover {
+        background-color: #dc3545;
+        color: #fff;
+        transition: all 0.3s ease;
+    }
+
+    .btn-success {
+        border-radius: 12px;
+        transition: transform 0.2s ease;
+    }
+
+    .btn-success:hover {
+        transform: scale(1.05);
+    }
+
+    .hover-scale-img {
+        transition: transform 0.3s ease;
+    }
+
+    .hover-scale-img:hover {
+        transform: scale(1.1);
+    }
+
+    .img-thumbnail {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<!-- FontAwesome Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<!-- Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+{% endblock %}
